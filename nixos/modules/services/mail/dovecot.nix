@@ -56,7 +56,7 @@ let
   # The idea is to match everything that looks like `$term =`
   # but not `# $term something something`
   # or `# $term = some value` because those are comments.
-  configContainsSetting = lines: term: builtins.match "^[^#]*\b${term}\b.*=" lines;
+  configContainsSetting = lines: term: match "^[^#]*\b${term}\b.*=" lines;
 
   warnAboutExtraConfigCollisions = map mkExtraConfigCollisionWarning (filter (configContainsSetting cfg.extraConfig) automaticallySetPluginSettings);
 
@@ -665,10 +665,10 @@ in
         assertion = cfg.showPAMFailure -> cfg.enablePAM;
         message = "dovecot is configured with showPAMFailure while enablePAM is disabled";
       }
-      # {
-      #   assertion = cfg.sieve.scripts != {} -> (cfg.mailUser != null && cfg.mailGroup != null);
-      #   message = "dovecot requires mailUser and mailGroup to be set when `sieve.scripts` is set";
-      # }
+      {
+        assertion = cfg.sieve.scripts != {} -> (cfg.mailUser != null && cfg.mailGroup != null);
+        message = "dovecot requires mailUser and mailGroup to be set when `sieve.scripts` is set";
+      }
     ];
 
   };
