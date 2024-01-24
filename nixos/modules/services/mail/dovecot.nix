@@ -56,7 +56,8 @@ let
   # The idea is to match everything that looks like `$term =`
   # but not `# $term something something`
   # or `# $term = some value` because those are comments.
-  configContainsSetting = lines: term: builtins.match "^[^#]*\b${term}\b.*=" lines;
+
+  configContainsSetting = lines: term: !builtins.isNull (builtins.match "^[^#]*\b${term}\b.*=" lines);
 
   warnAboutExtraConfigCollisions = map mkExtraConfigCollisionWarning (filter (configContainsSetting cfg.extraConfig) automaticallySetPluginSettings);
 
