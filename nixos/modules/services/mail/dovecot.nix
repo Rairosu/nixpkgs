@@ -5,7 +5,7 @@ let
     concatStringsSep flatten imap1 isList literalExpression mapAttrsToList
     mkEnableOption mkIf mkOption mkRemovedOptionModule optional optionalAttrs
     optionalString singleton types mkRenamedOptionModule nameValuePair
-    mapAttrs' listToAttrs match filter;
+    mapAttrs' listToAttrs filter;
 
   cfg = config.services.dovecot2;
   dovecotPkg = pkgs.dovecot;
@@ -56,7 +56,7 @@ let
   # The idea is to match everything that looks like `$term =`
   # but not `# $term something something`
   # or `# $term = some value` because those are comments.
-  configContainsSetting = lines: term: match "^[^#]*\b${term}\b.*=" lines;
+  configContainsSetting = lines: term: builtins.match "^[^#]*\b${term}\b.*=" lines;
 
   warnAboutExtraConfigCollisions = map mkExtraConfigCollisionWarning (filter (configContainsSetting cfg.extraConfig) automaticallySetPluginSettings);
 
