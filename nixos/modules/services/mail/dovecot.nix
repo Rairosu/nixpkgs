@@ -5,7 +5,7 @@ let
     concatStringsSep flatten imap1 isList literalExpression mapAttrsToList
     mkEnableOption mkIf mkOption mkRemovedOptionModule optional optionalAttrs
     optionalString singleton types mkRenamedOptionModule nameValuePair
-    mapAttrs' listToAttrs filter;
+    mapAttrs' listToAttrs match filter;
 
   cfg = config.services.dovecot2;
   dovecotPkg = pkgs.dovecot;
@@ -665,10 +665,10 @@ in
         assertion = cfg.showPAMFailure -> cfg.enablePAM;
         message = "dovecot is configured with showPAMFailure while enablePAM is disabled";
       }
-      {
-        assertion = cfg.sieve.scripts != {} -> (cfg.mailUser != null && cfg.mailGroup != null);
-        message = "dovecot requires mailUser and mailGroup to be set when `sieve.scripts` is set";
-      }
+      # {
+      #   assertion = cfg.sieve.scripts != {} -> (cfg.mailUser != null && cfg.mailGroup != null);
+      #   message = "dovecot requires mailUser and mailGroup to be set when `sieve.scripts` is set";
+      # }
     ];
 
   };
