@@ -5,7 +5,7 @@ let
     concatStringsSep flatten imap1 isList literalExpression mapAttrsToList
     mkEnableOption mkIf mkOption mkRemovedOptionModule optional optionalAttrs
     optionalString singleton types mkRenamedOptionModule nameValuePair
-    mapAttrs' listToAttrs filter;
+    mapAttrs' listToAttrs match filter;
 
   cfg = config.services.dovecot2;
   dovecotPkg = pkgs.dovecot;
@@ -57,7 +57,7 @@ let
   # but not `# $term something something`
   # or `# $term = some value` because those are comments.
 
-  configContainsSetting = lines: term: !builtins.isNull (builtins.match "^[^#]*\b${term}\b.*=" lines);
+  configContainsSetting = lines: term: match "^[^#]*\b${term}\b.*=" lines;
 
   warnAboutExtraConfigCollisions = map mkExtraConfigCollisionWarning (filter (configContainsSetting cfg.extraConfig) automaticallySetPluginSettings);
 
