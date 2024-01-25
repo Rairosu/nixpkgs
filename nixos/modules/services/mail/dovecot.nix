@@ -57,7 +57,7 @@ let
   # but not `# $term something something`
   # or `# $term = some value` because those are comments.
 
-  configContainsSetting = lines: term: match "^[^#]*\b${term}\b.*=" lines;
+  configContainsSetting = lines: term: builtins.match "^[^#]*\b${term}\b.*=" lines;
 
   warnAboutExtraConfigCollisions = map mkExtraConfigCollisionWarning (filter (configContainsSetting cfg.extraConfig) automaticallySetPluginSettings);
 
