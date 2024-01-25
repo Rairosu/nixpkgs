@@ -5,7 +5,7 @@ let
     concatStringsSep flatten imap1 isList literalExpression mapAttrsToList
     mkEnableOption mkIf mkOption mkRemovedOptionModule optional optionalAttrs
     optionalString singleton types mkRenamedOptionModule nameValuePair
-    mapAttrs' listToAttrs match filter;
+    mapAttrs' listToAttrs filter;
 
   cfg = config.services.dovecot2;
   dovecotPkg = pkgs.dovecot;
