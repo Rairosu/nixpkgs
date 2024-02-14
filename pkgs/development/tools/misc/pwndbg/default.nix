@@ -25,6 +25,10 @@ let
     python3.pkgs.ropgadget  # ref: https://github.com/pwndbg/pwndbg/blob/2022.12.19/pwndbg/commands/rop.py#L32
   ]);
 
+  patches = lib.writeFile "global_gdbinit" ''
+    set auto-load-local-gdbinit
+  '';
+
 in stdenv.mkDerivation rec {
   pname = "pwndbg";
   version = "2022.12.19";
@@ -45,7 +49,7 @@ in stdenv.mkDerivation rec {
     cp -r *.py pwndbg gdb-pt-dump $out/share/pwndbg
     chmod +x $out/share/pwndbg/gdbinit.py
     makeWrapper ${gdb}/bin/gdb $out/bin/pwndbg \
-      --add-flags "-q -x $out/share/pwndbg/gdbinit.py" \
+      --add-flags "-q -x $out/share/pwndbg/gdbinit.py -x ${patches}" \
       --prefix PATH : ${binPath} \
       --set NIX_PYTHONPATH ${pythonPath}
   '';
