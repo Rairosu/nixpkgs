@@ -4,6 +4,7 @@
 , fetchFromGitHub
 , makeWrapper
 , gdb
+, writeText
 }:
 
 let
@@ -25,7 +26,7 @@ let
     python3.pkgs.ropgadget  # ref: https://github.com/pwndbg/pwndbg/blob/2022.12.19/pwndbg/commands/rop.py#L32
   ]);
 
-  patches = lib.writeFile "global_gdbinit" ''
+  patches = writeText "global_gdbinit" ''
     set auto-load-local-gdbinit
   '';
 
