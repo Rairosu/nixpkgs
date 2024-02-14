@@ -27,7 +27,7 @@ let
   ]);
 
   patches = writeText "global_gdbinit" ''
-    set auto-load-local-gdbinit
+    set auto-load safe-path /
   '';
 
 in stdenv.mkDerivation rec {
