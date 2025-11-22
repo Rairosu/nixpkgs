@@ -100,6 +100,7 @@ let
 
     # Redox
     "x86_64-redox"
+    "aarch64-redox"
 
     # WASI
     "wasm64-wasi"

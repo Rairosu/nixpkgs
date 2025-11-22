@@ -294,6 +294,7 @@ in
   # we test `embedded` instead of `linuxCommon` because very few packages
   # successfully cross-compile to Redox so far
   x86_64-redox = mapTestOnCross systems.examples.x86_64-unknown-redox embedded;
+  aarch64-redox = mapTestOnCross systems.examples.aarch64-unknown-redox embedded;
 
   # Cross-built bootstrap tools for every supported platform
   bootstrapTools =

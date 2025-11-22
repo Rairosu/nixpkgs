@@ -120,6 +120,7 @@ rec {
         "mipsel-netbsd"
         "riscv64-netbsd"
         "x86_64-redox"
+        "aarch64-redox"
         "wasm32-wasi"
       ];
       badTargetPlatforms = [
