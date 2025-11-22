@@ -200,6 +200,12 @@ assert threadsCross != { } -> stdenv.targetPlatform.isWindows;
 # If turned on, we can't provide reproducible builds anymore
 assert reproducibleBuild -> profiledCompiler == false;
 
+builtins.trace ''gcc:
+  build : ${stdenv.buildPlatform.config}
+  host  : ${stdenv.hostPlatform.config}
+  target: ${stdenv.targetPlatform.config}
+  ${toString stdenv.cc.libc}
+''
 pipe
   ((callFile ./common/builder.nix { }) (
     {

@@ -1199,7 +1199,7 @@ rec {
       ])
       // {
         interpreter =
-          if pythonPackages != pkgs.pypy2Packages || pythonPackages != pkgs.pypy3Packages then
+          if pythonPackages != builtins.trace "LOLWTF ${name}" pkgs.pypy2Packages || pythonPackages != pkgs.pypy3Packages then
             if libraries == [ ] then
               python.interpreter
             else if (lib.isFunction libraries) then

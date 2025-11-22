@@ -8000,6 +8000,10 @@ with pkgs;
     useQt6 = true;
   };
 
+  relibc = callPackage ../development/libraries/relibc {
+    stdenv = stdenvNoLibc;
+  };
+
   reposilitePlugins = recurseIntoAttrs (callPackage ../by-name/re/reposilite/plugins.nix { });
 
   rocksdb_9_10 = rocksdb.overrideAttrs rec {

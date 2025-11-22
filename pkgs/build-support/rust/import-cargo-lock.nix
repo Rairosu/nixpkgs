@@ -6,6 +6,7 @@
   python3Packages,
   runCommand,
   cargo,
+  stdenv,
   jq,
 }:
 
@@ -197,6 +198,12 @@ let
           else
             missingHash;
       in
+      builtins.trace ''
+        building ${pkg.name}-${pkg.version} with:
+        build : ${stdenv.buildPlatform.config}
+        host  : ${stdenv.hostPlatform.config}
+        target: ${stdenv.targetPlatform.config}
+      ''
       runCommand "${pkg.name}-${pkg.version}" { } ''
         tree=${tree}
 
@@ -206,7 +213,7 @@ let
         # but only in nested directories.
         # Only check the top-level Cargo.toml, if it actually exists
         if [[ -f $tree/Cargo.toml ]]; then
-          crateCargoTOML=$(${cargo}/bin/cargo metadata --format-version 1 --no-deps --manifest-path $tree/Cargo.toml | \
+          crateCargoTOML=$(${builtins.trace "meowmeow" cargo}/bin/cargo metadata --format-version 1 --no-deps --manifest-path $tree/Cargo.toml | \
           ${jq}/bin/jq -r '.packages[] | select(.name == "${pkg.name}") | .manifest_path')
         fi
 

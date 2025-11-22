@@ -51,8 +51,19 @@ let
     ;
   useLLVM = stdenv.targetPlatform.useLLVM or false;
 in
+builtins.trace ''
+  rustc:
+  build : ${stdenv.buildPlatform.config}
+  host  : ${stdenv.hostPlatform.config}
+  target: ${stdenv.targetPlatform.config}
+
+  build : ${pkgsBuildTarget.stdenv.buildPlatform.config}
+  host  : ${pkgsBuildTarget.stdenv.hostPlatform.config}
+  target: ${pkgsBuildTarget.stdenv.targetPlatform.config}
+''
 stdenv.mkDerivation (finalAttrs: {
-  pname = "${targetPackages.stdenv.cc.targetPrefix}rustc";
+  # pname = "${targetPackages.stdenv.cc.targetPrefix}rustc";
+  pname = "${stdenv.cc.targetPrefix}rustc";
   inherit version;
 
   src = fetchurl {
@@ -120,8 +131,8 @@ stdenv.mkDerivation (finalAttrs: {
       cxxForBuild = cxxPrefixForStdenv pkgsBuildBuild.targetPackages.stdenv;
       ccForHost = ccPrefixForStdenv pkgsBuildHost.targetPackages.stdenv;
       cxxForHost = cxxPrefixForStdenv pkgsBuildHost.targetPackages.stdenv;
-      ccForTarget = ccPrefixForStdenv pkgsBuildTarget.targetPackages.stdenv;
-      cxxForTarget = cxxPrefixForStdenv pkgsBuildTarget.targetPackages.stdenv;
+      ccForTarget = ccPrefixForStdenv stdenv;
+      cxxForTarget = cxxPrefixForStdenv stdenv;
     in
     [
       "--sysconfdir=${placeholder "out"}/etc"
@@ -396,7 +407,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   buildInputs = [
-    openssl
+    # openssl
   ]
   ++ optionals stdenv.hostPlatform.isDarwin [
     zlib

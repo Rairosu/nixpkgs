@@ -41,7 +41,20 @@ lib.init bootStages
       assert vanillaPackages.stdenv.buildPlatform == localSystem;
       assert vanillaPackages.stdenv.hostPlatform == localSystem;
       assert vanillaPackages.stdenv.targetPlatform == localSystem;
-      vanillaPackages.stdenv.override { targetPlatform = crossSystem; };
+      vanillaPackages.stdenv.override {
+        targetPlatform = crossSystem;
+        # cc = vanillaPackages.wrapCC ((vanillaPackages.gccFun {
+        #   majorMinorVersion = "13.2";
+        #   noSysDirs = true;
+        # }).overrideAttrs (oldAttrs: {
+        #   buildInputs = (oldAttrs.buildInputs or []) ++ [ vanillaPackages.flex ];
+        #   src = vanillaPackages.fetchgit {
+        #     url = "https://gitlab.redox-os.org/redox-os/gcc";
+        #     hash = "sha256-it2rZqy51eUdaEUPzKsA2k4pGS5YBlTwWLALjaVNc0w=";
+        #   };
+        # }));
+        # cc = vanillaPackages.gcc13;
+      };
     # It's OK to change the built-time dependencies
     allowCustomOverrides = true;
   })

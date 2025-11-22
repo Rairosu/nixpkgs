@@ -79,6 +79,12 @@ let
 
 in
 with passthru;
+builtins.trace ''
+  pypy:
+  build : ${stdenv.buildPlatform.config}
+  host  : ${stdenv.hostPlatform.config}
+  target: ${stdenv.targetPlatform.config}
+''
 stdenv.mkDerivation rec {
   inherit pname version;
 

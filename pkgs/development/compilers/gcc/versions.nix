@@ -3,6 +3,7 @@ let
     "15" = "15.2.0";
     "14" = "14.3.0";
     "13" = "13.4.0";
+    "13.2" = "13.2.0";
   };
 
   fromMajorMinor = majorMinorVersion: majorMinorToVersionMap."${majorMinorVersion}";
